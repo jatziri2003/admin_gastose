@@ -8,11 +8,10 @@ use webvimark\modules\UserManagement\UserManagementModule;
 ?>
     <?php
     NavBar::begin([
-        'brandLabel' => 'AdminGast',
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => "navbar navbar-expand-lg navbar-light navbar-float"]
     ]);
-    
     echo Nav::widget([
       'encodeLabels'=> false,
         'options' => ['class' => 'navbar-nav'],

@@ -64,14 +64,14 @@ class Usuario extends \yii\db\ActiveRecord
         return [
             'usu_id' => 'ID',
             'usu_nombre' => 'Nombre',
-            'usu_apellidop' => 'Apellido Paterno',
-            'usu_apellidom' => 'Apellido Materno',
-            'usu_fecha_nac' => 'Fecha Nacimiento',
+            'usu_apellidop' => 'Apellidop',
+            'usu_apellidom' => 'Apellidom',
+            'usu_fecha_nac' => 'Fecha Nac',
             'usu_sexo' => 'Sexo',
-            'usu_fkcarrera' => 'Carrera',
-            'usu_num_control' => 'Número Control',
-            'usu_fkcolonia' => 'Colonia',
-            'usu_fkuser' => 'User',
+            'usu_fkcarrera' => 'Fkcarrera',
+            'usu_num_control' => 'Num Control',
+            'usu_fkcolonia' => 'Fkcolonia',
+            'usu_fkuser' => 'Fkuser',
         ];
     }
 
@@ -131,6 +131,5 @@ class Usuario extends \yii\db\ActiveRecord
     {
         $this->usu_sexo = self::USU_SEXO_F;
     }
-    
 
 }
