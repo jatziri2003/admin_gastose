@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-
-use app;
 use Yii;
 use yii\base\Model;
 use app\models\Dashboard;
@@ -46,24 +44,22 @@ class DashboardSearch extends Dashboard
     {
         $query = Dashboard::find();
 
-        if(!Yii::$app->user->isSuperAdmin) {
- 
-           
-             
+        // Solo filtrar por roles si el usuario estÃ¡ autenticado y no es superadmin
+        if (!Yii::$app->user->isGuest && !Yii::$app->user->isSuperAdmin) {
             $query = $query->where(['das_estatus' => 1]);
-    
-            $roles=Yii::$app->user->identity->roles;
-             
-                         
-            foreach ($roles as $rol) {
-                 $query = $query->andWhere(['like', 'das_roles', $rol->name]); 
-                }
-             
-           $query =$query->orderBy(['das_orden' => SORT_ASC]);
-                    }
-                    
 
-        // add conditions that should always apply here
+            $roles = Yii::$app->user->identity->roles ?? [];
+
+            foreach ($roles as $rol) {
+                $query = $query->andWhere(['like', 'das_roles', $rol->name]);
+            }
+
+            $query = $query->orderBy(['das_orden' => SORT_ASC]);
+        } else {
+            // Para usuarios no autenticados o superadmins: mostrar todos activos
+            $query = $query->where(['das_estatus' => 1]);
+            $query = $query->orderBy(['das_orden' => SORT_ASC]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -72,8 +68,6 @@ class DashboardSearch extends Dashboard
         $this->load($params, $formName);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -85,9 +79,9 @@ class DashboardSearch extends Dashboard
         ]);
 
         $query->andFilterWhere(['like', 'das_imagen', $this->das_imagen])
-            ->andFilterWhere(['like', 'das_titulo', $this->das_titulo])
-            ->andFilterWhere(['like', 'das_url', $this->das_url])
-            ->andFilterWhere(['like', 'das_roles', $this->das_roles]);
+              ->andFilterWhere(['like', 'das_titulo', $this->das_titulo])
+              ->andFilterWhere(['like', 'das_url', $this->das_url])
+              ->andFilterWhere(['like', 'das_roles', $this->das_roles]);
 
         return $dataProvider;
     }

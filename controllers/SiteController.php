@@ -16,6 +16,7 @@ use app\models\DashboardSearch;
 
 class SiteController extends Controller
 {
+    public $freeAccess = true; 
     /**
      * {@inheritdoc}
      */
